@@ -1,0 +1,15 @@
+---
+- hosts: web
+  user: ec2-user
+  become: true
+  tasks:
+    - name: ensure nginx is at the latest version
+      yum: name=nginx state=latest
+    - name: Copy file with owner and permissions
+      copy:
+        src: index.html
+        dest: /usr/share/nginx/html/
+    - name: start nginx
+      service:
+          name: nginx
+          state: started
